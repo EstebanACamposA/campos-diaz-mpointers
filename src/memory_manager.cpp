@@ -5,6 +5,12 @@
 #include <cstdint>
 #include <iomanip>
 
+///???
+#include <grpcpp/grpcpp.h>
+#include "greeter.grpc.pb.h"
+#include "greeter.pb.h"
+//???
+
 /*
 There are 4 byte (int) size words. The words also have some metadata. Word(int id, int data, int type)
 A block is a variable size series of adjacent words that make up a variable. A variable can have unused space if specified in Create(size, type)

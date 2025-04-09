@@ -78,5 +78,5 @@
         "ios": "cpp",
         "locale": "cpp"
     },
-    "C_Cpp.errorSquiggles": "enabledIfIncludesResolve"
+    "C_Cpp.errorSquiggles": "enabled"
 }

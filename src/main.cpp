@@ -6,10 +6,10 @@
 
 
 // #include "memory_manager_server.cpp"
-// #include <grpcpp/grpcpp.h>
-// #include "grpc_test.grpc.pb.h"
-// #include "greeter.grpc.pb.h"
-// #include "greeter.pb.h"
+#include <grpcpp/grpcpp.h>
+#include "greeter.grpc.pb.h"
+#include "greeter.pb.h"
+
 
 
 int main() {
@@ -83,6 +83,12 @@ int main() {
     int barro = *mp;
     std::cout << "data a, " << std::hex << std::setw(2) << std::setfill('0') << barro << std::endl;
     std::cout << std::dec << std::endl;
+
+
+    std::cout << "--------------------------------------------------------" << std::endl;
+
+    std::string port("esto no se esta usando aun.");
+    RunMyServer(port);
 
     return 0;
 }

@@ -1,10 +1,9 @@
 #include <iostream>
-#include "my_header.h"  // Include the header where the function is declared
+#include "memory_manager.h"  // Include the header where the function is declared
 
 //Server includes
 #include <grpcpp/grpcpp.h>
-// #include "grpc_test.grpc.pb.h"
-// #include "greeter.grpc.pb.h"
+#include "greeter.grpc.pb.h"
 #include "greeter.pb.h"
 
 
@@ -25,9 +24,10 @@ using greeter::HelloRequest;
 
     /////////////////
     // Funcion para probar los headers.
-    void helloWorldHeaderExample() {
-        std::cout << "Esta funcion se declara en memory manager de source y lo del header hace que todo el mundo lo pueda ver." << std::endl;
-    }
+    // void helloWorldHeaderExample()
+    // {
+    //     std::cout << "Esta funcion se declara en memory manager de source y lo del header hace que todo el mundo lo pueda ver." << std::endl;
+    // }
     /////////////////
 
     // /////////////////
@@ -45,7 +45,8 @@ using greeter::HelloRequest;
     // Servicio de prueba basado en el .proto de prueba grpc_test.proto.
     // Un servicio puede tener varios metodos.
     class GreeterImpl final : public Greeter::Service {
-        Status SayHello(ServerContext* context, const HelloRequest* request, HelloReply* reply) override {
+        Status SayHello(ServerContext* context, const HelloRequest* request, HelloReply* reply) override
+        {
             reply->set_message("Server responde a " + request->name());
             return Status::OK;
         }
@@ -70,7 +71,8 @@ using greeter::HelloRequest;
     // /////////////////
 
     /////////////////
-    void RunServer(const std::string port) {
+    void RunMyServer(const std::string port)
+    {
         std::string server_address("0.0.0.0:50051");
         // std::string server_address("0.0.0.0:" + port);
         GreeterImpl service;
