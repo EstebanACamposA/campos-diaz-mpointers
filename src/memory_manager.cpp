@@ -95,9 +95,9 @@ bool Heap::Available(int pos, int needed_space)
 // Receives a block's id and returns its absolute id in memory_space. 
 int Heap::FindId(int id)
 {
-    std::cout << "this pointer: " << this << std::endl;
-    std::cout << "ENTERED FindId ^^^^^^^^^^; " << "id = " << id << std::endl;
-    std::cout << "ENTERED FindId ^^^^^^^^^^; " << "this->size = " << this->size << std::endl;
+    // std::cout << "this pointer: " << this << std::endl;
+    // std::cout << "ENTERED FindId ^^^^^^^^^^; " << "id = " << id << std::endl;
+    // std::cout << "ENTERED FindId ^^^^^^^^^^; " << "this->size = " << this->size << std::endl;
     for (size_t i = 0; i < this->size; i++)
     {
         if (memory_space[i].id == id && memory_space[i].ref_count > 0)
@@ -156,20 +156,20 @@ void Heap::Set(int id, int value_size, const std::vector<uint8_t>& value)
 // Returns a std::vector<int> with the int values of the block at id.
 std::vector<uint8_t> Heap::Get(int id)
 {
-    std::cout << "ENTERED Get() !!!!!!!!!!!!!!!!2" << std::endl;
-    std::cout << "0 id = " << id << std::endl;
+    // std::cout << "ENTERED Get() !!!!!!!!!!!!!!!!2" << std::endl;
+    // std::cout << "0 id = " << id << std::endl;
     int absolute_id = FindId(id);
-    std::cout << "1 id = " << id << std::endl;
-    std::cout << "1 absolute_id = " << absolute_id << std::endl;
+    // std::cout << "1 id = " << id << std::endl;
+    // std::cout << "1 absolute_id = " << absolute_id << std::endl;
     int block_size = GetSizeOfBlock(absolute_id);
-    std::cout << "2 id = " << id << std::endl;
-    std::cout << "2 absolute_id = " << absolute_id << std::endl;
+    // std::cout << "2 id = " << id << std::endl;
+    // std::cout << "2 absolute_id = " << absolute_id << std::endl;
     std::vector<uint8_t> block_data(block_size);
     for (size_t i = 0; i < block_size; i++)
     {
         block_data[i] = memory_space[i+absolute_id].data;
     }
-    std::cout << "EXITED Get() !!!!!!!!!!!!!!!!2??" << std::endl;
+    // std::cout << "EXITED Get() !!!!!!!!!!!!!!!!2??" << std::endl;
     return block_data;  // Returning a vector
 }
 

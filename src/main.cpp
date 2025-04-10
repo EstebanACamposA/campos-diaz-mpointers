@@ -118,7 +118,9 @@ int main() {
     heap.ShowHex();
 
     DereferencedMpointer<int> dmp = *mp;
-    // *mp = 787787787787;
+    *mp = 787;
+    std::cout << "asignacion" << std::endl;
+
 
 
     // g++  src/memory_manager.cpp src/client.cpp src/server.cpp src/main.cpp -Iinclude -o compilando

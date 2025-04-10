@@ -277,6 +277,7 @@ class Mpointer
             std::vector<uint8_t> size_bytes(sizeof(int));
             std::memcpy(size_bytes.data(), &size, sizeof(int));
             // Calls Create.
+            std::cout << "Client sent: Create request." << std::endl;
             std::vector<uint8_t> id_response = SendMessage({1, size_bytes[0], size_bytes[1], size_bytes[2], size_bytes[3]}, global_port);
             std::memcpy(&(this->id), id_response.data(), sizeof(int));
         }
@@ -348,6 +349,10 @@ class Mpointer
             operation_byte.insert(operation_byte.end(), size_bytes.begin(), size_bytes.end());
             operation_byte.insert(operation_byte.end(), data_for_block.begin(), data_for_block.end());
 
+            std::cout << "Client sent: Set request." << std::endl;
+            std::cout << "ID WAS." << this->id << std::endl;
+                        
+
             SendMessage(operation_byte, global_port);
 
             // this->target_memory_manager->Set(this->id, size, data_for_block);
@@ -363,7 +368,7 @@ class Mpointer
         // 3: GET {3, id, id, id, id}
         T GetDereferencedValue()
         {
-            std::cout << "ENTERED GetDereferencedValue() !!!!!!!!!!!!!!!!1" << std::endl;    
+            // std::cout << "ENTERED GetDereferencedValue() !!!!!!!!!!!!!!!!1" << std::endl;    
             
             
             // std::vector<uint8_t> serialized_dereferenced_value = this->target_memory_manager->Get(this->id);
@@ -374,13 +379,14 @@ class Mpointer
 
             operation_byte.insert(operation_byte.end(), id_bytes.begin(), id_bytes.end());
 
+            std::cout << "Client sent: Get request." << std::endl;
             std::vector<uint8_t> serialized_dereferenced_value = SendMessage(operation_byte, global_port);
 
-            for (size_t i = 0; i < serialized_dereferenced_value.size(); i++)
-            {
-                std::cout << "TRIES TO PRINT 111";    
-                std::cout << serialized_dereferenced_value[i];
-            }
+            // for (size_t i = 0; i < serialized_dereferenced_value.size(); i++)
+            // {
+            //     std::cout << "TRIES TO PRINT 111";    
+            //     std::cout << serialized_dereferenced_value[i];
+            // }
             std::cout << "Size of serialized_dereferenced_value was" << serialized_dereferenced_value.size() << std::endl;    
 
             return Deserialize(serialized_dereferenced_value);

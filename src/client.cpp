@@ -52,7 +52,8 @@ std::vector<uint8_t> SendMessage(std::vector<uint8_t> message, int port)
 
 
     close(sock);
-    return {7};
+    std::vector<uint8_t> vec(buffer, buffer + 1024);
+    return vec;
 
 
 

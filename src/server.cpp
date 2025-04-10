@@ -79,15 +79,17 @@ void RunServer(Heap* heap)
         std::vector<uint8_t> result_switch = {};
         switch (buffer[0]) {
             case 1:{
+                std::cout << "Server received: Create request." << std::endl;
                 int size = 0;
                 std::memcpy(&size, &buffer[1], sizeof(int));
 
                 // Returns de Id from Create
-                int res_temp = heap->Create(size, 7873881);
+                int res_temp = heap->Create(size, 0);
                 result_switch.resize(sizeof(int));
                 memcpy(result_switch.data(), &res_temp, sizeof(int));
                 break;}
             case 2:{
+                std::cout << "Server received: Set request." << std::endl;
                 int id = 0;
                 std::memcpy(&id, &buffer[1], sizeof(int));
                 int size = 0;
@@ -97,12 +99,14 @@ void RunServer(Heap* heap)
                 heap->Set(id, size, data);
                 break;}
             case 3:{
+                std::cout << "Server received: Get request." << std::endl;
                 int id = 0;
                 std::memcpy(&id, &buffer[1], sizeof(int));
                 std::vector<uint8_t> data = heap->Get(id);
                 result_switch = data;
                 break;}
             case 4:{
+                std::cout << "Server received: ModifyCount request." << std::endl;
                 int id = 0;
                 std::memcpy(&id, &buffer[1], sizeof(int));
                 int value = 0;
@@ -116,11 +120,18 @@ void RunServer(Heap* heap)
         // send(new_socket, hello, strlen(hello), 0);
         if (!result_switch.empty()) {
             send(new_socket, result_switch.data(), result_switch.size(), 0);
+            // std::cout << "result_switch" << result_switch[0] << std::endl;
+            std::cout << "Reply from server: " << std::endl;
+            for (uint8_t byte : result_switch) {
+                std::cout << static_cast<int>(byte) << " ";
+            }
+            std::cout << " " << std::endl;
         } else {
             send(new_socket, hello, strlen(hello), 0);
+            std::cout << "Hello message sent" << std::endl;
         }
-
-        std::cout << "Hello message sent" << std::endl;
+        heap->ShowHex();
+        
 
         close(new_socket);
     }
