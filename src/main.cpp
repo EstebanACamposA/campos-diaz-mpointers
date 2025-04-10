@@ -6,20 +6,26 @@
 
 
 // #include "memory_manager_server.cpp"
-#include <grpcpp/grpcpp.h>
-#include "greeter.grpc.pb.h"
-#include "greeter.pb.h"
+// #include <grpcpp/grpcpp.h>
+// #include "greeter.grpc.pb.h"
+// #include "greeter.pb.h"
 
 
 
 int main() {
     std::cout << "Hello from main.cpp!" << std::endl;
+
+    // Creates the Heap. Core of the Memory Manager. (size in bytes)
     Heap heap(16);
 
-
+    //LOS NOMBRES EN ESPANNOL ESTAN PARA VARIABLES PLACEHOLDER Y COSAS QUE LUEGO SE QUITAN.
+    //crea un bloque de memoria de 4 bytes. El bloque tiene un id (int) que lo determina heap.
     int idecito = heap.Create(4, 1);
+    //esto es un dato de 4 bytes. La funcion Set necesita un id y un dato (std::vector<uint8_t>). Pone el dato en el bloque de memoria de ese id
     std::vector<uint8_t> bytecito = {100,112,113,114};
     heap.Set(idecito, 4, bytecito);
+
+
 
     // std::vector<uint8_t> bytecito_retornado;
     // bytecito_retornado = heap.Get(idecito);
@@ -29,6 +35,8 @@ int main() {
     // {
     //     std::cout << bytecito_retornado[i];
     // }
+
+
 
 
     int idecito2 = heap.Create(sizeof(long), 1);
@@ -42,8 +50,10 @@ int main() {
 
 
     heap.Show();
+    //esto printea el heap pero en hexadecimal
     heap.ShowHex();
 
+    //Aqui es donde ya ahora si se crea el mpointer. Necesita un id para funcionar porque equivale a una direccion de memoria, como lo que se saca con el &.
     Mpointer<int> mp(idecito);  // Instantiate Mpointer with int
     mp.printId();
 
@@ -53,9 +63,13 @@ int main() {
     Mpointer<int> mp3(idecito3);  // Instantiate Mpointer with int
     mp3.printId();
 
+    //Esto esta mientras no existe lo del server.
     mp.SetMemoryManager(&heap);
     mp2.SetMemoryManager(&heap);
     mp3.SetMemoryManager(&heap);
+
+
+
 
     /////////// mp using dptr manually.
     // DereferencedMpointer<int> dptr = *mp;
@@ -80,15 +94,20 @@ int main() {
     // std::cout << "data c, " << std::hex << std::setw(2) << std::setfill('0') << c << std::endl;
     // std::cout << std::dec << std::endl;
     /////////// mp
-    int barro = *mp;
-    std::cout << "data a, " << std::hex << std::setw(2) << std::setfill('0') << barro << std::endl;
+
+
+
+    //Aqui una variable recibio el valor al que apunta el puntero mp.
+    int var = *mp;
+    //print hexadecimal.
+    std::cout << "data a, " << std::hex << std::setw(2) << std::setfill('0') << var << std::endl;
     std::cout << std::dec << std::endl;
 
 
     std::cout << "--------------------------------------------------------" << std::endl;
 
-    std::string port("esto no se esta usando aun.");
-    RunMyServer(port);
+    // std::string port("esto no se esta usando aun.");
+    // RunMyServer(port);
 
     return 0;
 }
